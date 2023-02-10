@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
+import { nanoid } from '@reduxjs/toolkit';
 
-import { addContactAction } from 'redux/contactsSlice';
-import { getContacts } from 'redux/selectors';
+import { addContact } from 'redux/operations';
+import { selectContacts } from 'redux/selectors';
 
 import { Input, Button, Label, Form } from './ContactForm.styled';
 
@@ -11,7 +12,7 @@ export function ContactForm() {
   const [contactName, setContactName] = useState('');
   const [contactNumber, setContactNumber] = useState('');
 
-  const contacts = useSelector(getContacts);
+  const contacts = useSelector(selectContacts);
   const dispatch = useDispatch();
 
   const handleInputChange = evt => {
@@ -38,6 +39,12 @@ export function ContactForm() {
       elements: { number, name },
     } = evt.target;
 
+    const contact = {
+      id: nanoid(),
+      name: name.value,
+      phone: number.value,
+    };
+
     const contactsInclude = contacts.some(el => el.name === name.value);
 
     if (contactsInclude) {
@@ -47,7 +54,7 @@ export function ContactForm() {
       return;
     }
 
-    dispatch(addContactAction(name.value, number.value));
+    dispatch(addContact(contact));
 
     setContactNumber('');
     setContactName('');

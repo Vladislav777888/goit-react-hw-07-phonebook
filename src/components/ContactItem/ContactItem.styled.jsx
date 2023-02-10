@@ -3,9 +3,13 @@ import styled from 'styled-components';
 export const ListItem = styled.li`
   display: flex;
   align-items: center;
-  margin-top: 5px;
+
   position: relative;
   padding-left: 20px;
+
+  & + & {
+    margin-top: 5px;
+  }
 
   ::before {
     content: '';
@@ -23,7 +27,12 @@ export const ListItem = styled.li`
 
 export const ContactsText = styled.p`
   font-size: ${p => p.theme.fontSizes.ml};
-  min-width: 300px;
+  min-width: 250px;
+`;
+
+export const ContactsNumber = styled.span`
+  font-size: ${p => p.theme.fontSizes.ml};
+  min-width: 150px;
 `;
 
 export const Button = styled.button`
